@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Name API</title>
+    <script>
+        let nombre = window.prompt("Digita tu nombre:");
+        
+        async function traerPais() {
+            const respuesta = await fetch(`https://api.nationalize.io?name=${nombre}`);
+
+            if(!respuesta.ok) {
+                let oops = "404 no se encuentra un culo!";
+                alert(oops);
+            }
+            
+            const pais = respuesta.json();
+
+            return pais;
+        }
+
+        async function mostrarPais(n) {
+            let paiz = n.country[0].country_id;
+            
+            const res = await fetch(`https://restcountries.eu/rest/v2/alpha/${paiz}`)
+            
+            const paix = res.json();
+
+            return paix;
+        }
+
+        function mostrarPaix(n) {
+            document.getElementById('pais').innerHTML = n.translations.es;
+        }
+
+        traerPais() //TODO: async/await
+        traerPais().then(mostrarPais).then(mostrarPaix);
+        
+    </script>
+</head>
+<body>
+    <h1>En qué país es más popular tu nombre?</h1>
+    <p id="pais">Cargando...</p>
+</body>
+</html>
