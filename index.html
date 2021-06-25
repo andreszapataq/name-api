@@ -4,39 +4,24 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Name API</title>
+    <title>Your Name Popularity</title>
     <script>
         
-        let nombre = window.prompt("Digita tu nombre:");
-        
-        async function traerPais() {
+        async function getPopularity() {
+            let nombre = window.prompt("Digita tu nombre:");
+
             const respuesta = await fetch(`https://api.nationalize.io?name=${nombre}`);
+            const paises = await respuesta.json();
 
-            if(!respuesta.ok) {
-                let oops = "404 no se encuentra un culo!";
-                alert(oops);
-            }
-            
-            const pais = respuesta.json();
+            let countryCode = paises.country[0].country_id;
 
-            return pais;
+            const res = await fetch(`https://restcountries.eu/rest/v2/alpha/${countryCode}`)
+            const countryName = await res.json();
+
+            document.getElementById('pais').innerHTML = countryName.translations.es;
         }
 
-        async function mostrarPais(n) {
-            let paiz = n.country[0].country_id;
-            
-            const res = await fetch(`https://restcountries.eu/rest/v2/alpha/${paiz}`)
-            
-            const paix = res.json();
-
-            return paix;
-        }
-
-        function mostrarPaix(n) {
-            document.getElementById('pais').innerHTML = n.translations.es;
-        }
-
-        traerPais().then(mostrarPais).then(mostrarPaix);
+        getPopularity();
         
     </script>
 </head>
