@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Name API</title>
     <script>
+        
         let nombre = window.prompt("Digita tu nombre:");
         
         async function traerPais() {
@@ -35,7 +36,6 @@
             document.getElementById('pais').innerHTML = n.translations.es;
         }
 
-        traerPais() //TODO: async/await
         traerPais().then(mostrarPais).then(mostrarPaix);
         
     </script>
