@@ -7,7 +7,7 @@
     <title>Your Name Popularity</title>
     <script>
         
-        async function getPopularity() {
+        async function getCountry() {
             let nombre = window.prompt("Digita tu nombre:");
 
             const respuesta = await fetch(`https://api.nationalize.io?name=${nombre}`);
@@ -21,7 +21,7 @@
             document.getElementById('pais').innerHTML = countryName.translations.es;
         }
 
-        getPopularity();
+        getCountry();
         
     </script>
 </head>
