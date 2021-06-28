@@ -8,17 +8,22 @@
     <script>
         
         async function getCountry() {
-            let nombre = window.prompt("Digita tu nombre:");
+            try {
+                let nombre = prompt("Digita tu nombre:");
 
-            const respuesta = await fetch(`https://api.nationalize.io?name=${nombre}`);
-            const paises = await respuesta.json();
+                const respuesta = await fetch(`https://api.nationalize.io?name=${nombre}`);
+                const paises = await respuesta.json();
 
-            let countryCode = paises.country[0].country_id;
+                let countryCode = paises.country[0].country_id;
 
-            const res = await fetch(`https://restcountries.eu/rest/v2/alpha/${countryCode}`)
-            const countryName = await res.json();
+                const res = await fetch(`https://restcountries.eu/rest/v2/alpha/${countryCode}`)
+                const countryName = await res.json();
 
-            document.getElementById('pais').innerHTML = countryName.translations.es;
+                document.getElementById('pais').innerHTML = countryName.translations.es;
+            }
+            catch(error) {
+                document.getElementById('pais').innerHTML = "El servidor no responde, inténtalo más tarde";
+            }
         }
 
         getCountry();
