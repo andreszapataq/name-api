@@ -14,12 +14,15 @@
                 const respuesta = await fetch(`https://api.nationalize.io?name=${nombre}`);
                 const paises = await respuesta.json();
 
-                let countryCode = paises.country[0].country_id;
-
-                const res = await fetch(`https://restcountries.eu/rest/v2/alpha/${countryCode}`)
-                const countryName = await res.json();
-
-                document.getElementById('pais').innerHTML = countryName.translations.es;
+                if(paises.country.length > 0) {
+                    let countryCode = paises.country[0].country_id;
+                    const res = await fetch(`https://restcountries.eu/rest/v2/alpha/${countryCode}`)
+                    const countryName = await res.json();
+                    document.getElementById('pais').innerHTML = countryName.translations.es;
+                }
+                else {
+                    document.getElementById('pais').innerHTML = "El nombre no existe en la base de datos";
+                }
             }
             catch(error) {
                 document.getElementById('pais').innerHTML = "El servidor no responde, inténtalo más tarde";
